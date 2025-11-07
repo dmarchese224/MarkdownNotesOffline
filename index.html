@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MarkDown Notes</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png" />
+  <link rel="shortcut icon" href="assets/icons/favicon.ico" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563eb" />
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding-top: 50px; background: #f9fafb; }
+    .app-header { position: fixed; top: 0; left: 0; width: 100%; height: 50px; background-color: white; border-bottom: 1px solid #ccc; display: flex; align-items: center; padding: 0 16px; box-sizing: border-box; z-index: 1000; }
+    .app-logo { height: 40px; width: auto; margin-right: 12px; cursor: pointer; }
+    .app-title { font-weight: 600; font-size: 1.2rem; color: #2563eb; margin: 0; user-select: none; }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <img src="assets/logo.png" alt="MarkDown logo" class="app-logo" />
+    <h1 class="app-title">MarkDown Notes</h1>
+  </header>
+  <main id="app" style="max-width:700px; margin:70px auto 0 auto;">
+  <textarea id="note-input" style="width:100%;height:150px;font-family:monospace;"></textarea>
+  <div>
+    <button onclick="saveNote()">Save Note</button>
+    <button onclick="loadNote()">Load Note</button>
+  </div>
+  <h3>Preview:</h3>
+  <div id="preview" style="background:#fff;border-radius:8px;padding:16px;min-height:80px;"></div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  const input = document.getElementById('note-input');
+  const preview = document.getElementById('preview');
+  input.addEventListener('input', () => {
+    preview.innerHTML = marked.parse(input.value);
+    localStorage.setItem('note', input.value);
+  });
+  function saveNote() {
+    localStorage.setItem('note', input.value);
+    alert('Note saved!');
+  }
+  function loadNote() {
+    input.value = localStorage.getItem('note') || '';
+    preview.innerHTML = marked.parse(input.value);
+  }
+  // Load note on startup
+  loadNote();
+</script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
